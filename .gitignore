@@ -1,0 +1,12 @@
+bin/*
+include/*
+lib/*
+pyvenv.cfg
+.idea/*
+*.pkl
+*.csv
+build/*
+*.spec
+share/*
+.DS_Store
+dist/*
