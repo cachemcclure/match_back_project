@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
 import polars as pl
 import sys
 from pickle import load as pload
+from sql_fx import return_sql
 
 
 creds = {
@@ -17,7 +18,8 @@ creds = {
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.creds = pload(open("creds.pkl", "rb"))
+        # self.creds = pload(open("creds.pkl", "rb"))
+        self.creds = creds
         self.init_ui()
 
     def init_ui(self):
@@ -69,8 +71,9 @@ class MainWindow(QMainWindow):
         return
 
     def read_sql(self):
-        with open("query.sql", "r") as f:
-            sql = f.read()
+        # with open("query.sql", "r") as f:
+        # sql = f.read()
+        sql = return_sql()
         uri = (
             f'redshift://{self.creds["redshift_username"]}:{self.creds["redshift_password"]}@'
             + f'{self.creds["redshift_host"]}:{self.creds["redshift_port"]}/{self.creds["redshift_database"]}'
