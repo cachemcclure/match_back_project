@@ -3,13 +3,21 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
 import polars as pl
 import sys
 from pickle import load as pload
-import pathlib
+
+
+creds = {
+    "redshift_username": "reservebar-master",
+    "redshift_password": "0$sd^e2ivN!9xP!MO4Mr",
+    "redshift_host": "reservebar-master.cc6flg5f8ipy.us-east-1.redshift.amazonaws.com",
+    "redshift_port": "5439",
+    "redshift_database": "reservebar-master",
+}
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.creds = pload(open('creds.pkl', 'rb'))
+        self.creds = pload(open("creds.pkl", "rb"))
         self.init_ui()
 
     def init_ui(self):
@@ -57,19 +65,23 @@ class MainWindow(QMainWindow):
         return
 
     def read_data(self, filename):
-        self.rawdf = pl.read_csv(source=filename, separator=',')
+        self.rawdf = pl.read_csv(source=filename, separator=",")
         return
 
     def read_sql(self):
-        with open('query.sql', 'r') as f:
+        with open("query.sql", "r") as f:
             sql = f.read()
-        uri = f'redshift://{self.creds["redshift_username"]}:{self.creds["redshift_password"]}@' + \
-              f'{self.creds["redshift_host"]}:{self.creds["redshift_port"]}/{self.creds["redshift_database"]}'
-        self.querydf = pl.read_database(query=sql,connection_uri=uri,engine='connectorx')
+        uri = (
+            f'redshift://{self.creds["redshift_username"]}:{self.creds["redshift_password"]}@'
+            + f'{self.creds["redshift_host"]}:{self.creds["redshift_port"]}/{self.creds["redshift_database"]}'
+        )
+        self.querydf = pl.read_database(
+            query=sql, connection_uri=uri, engine="connectorx"
+        )
         return
 
     def join_data(self):
-        self.exportdf = self.querydf.join(self.rawdf,on='email',how='inner')
+        self.exportdf = self.querydf.join(self.rawdf, on="email", how="inner")
         return
 
     def export_csv(self):

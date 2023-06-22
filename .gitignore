@@ -10,3 +10,7 @@ build/*
 share/*
 .DS_Store
 dist/*
+main.build/*
+main.dist/*
+main.onefile-build/*
+*.bin
