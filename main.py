@@ -2,8 +2,10 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
 import polars as pl
 import sys
-from pickle import load as pload
+
+# from pickle import load as pload
 from sql_fx import return_sql
+from time import time
 
 
 creds = {
@@ -89,7 +91,9 @@ class MainWindow(QMainWindow):
 
     def export_csv(self):
         try:
-            self.exportdf.write_csv("exported_data.csv")
+            self.exportdf.write_csv(
+                f"~/downloads/exported_data_{str(int(time()*1000000))}.csv"
+            )
             self.ret_label.setText("Data Exported Successfully!")
         except Exception as err:
             print(str(err)[:250])

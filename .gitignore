@@ -14,3 +14,5 @@ main.build/*
 main.dist/*
 main.onefile-build/*
 *.bin
+__pycache__/*
+*.toml
