@@ -16,3 +16,5 @@ main.onefile-build/*
 *.bin
 __pycache__/*
 *.toml
+creds_fx.py
+Scripts/*

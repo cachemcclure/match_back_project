@@ -2,26 +2,16 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
 import polars as pl
 import sys
-
-# from pickle import load as pload
+from creds_fx import ret_creds
 from sql_fx import return_sql
 from time import time
-
-
-creds = {
-    "redshift_username": "reservebar-master",
-    "redshift_password": "0$sd^e2ivN!9xP!MO4Mr",
-    "redshift_host": "reservebar-master.cc6flg5f8ipy.us-east-1.redshift.amazonaws.com",
-    "redshift_port": "5439",
-    "redshift_database": "reservebar-master",
-}
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         # self.creds = pload(open("creds.pkl", "rb"))
-        self.creds = creds
+        self.creds = ret_creds()
         self.init_ui()
 
     def init_ui(self):
